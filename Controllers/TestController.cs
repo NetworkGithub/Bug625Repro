@@ -45,7 +45,7 @@ namespace Bug625Repro.Controllers
             }
             catch (Exception exception)
             {
-                //Logger.LogError(exception, "PrintInvoicesFromEmail");
+                //
             }
         }
         public static async Task TestAsyncSync(string mailFolderId, string notPrintedFolderId)
@@ -75,7 +75,7 @@ namespace Bug625Repro.Controllers
             }
             catch (Exception exception)
             {
-                //Logger.LogError(exception, "PrintInvoicesFromEmail");
+                //
             }
         }
     }
