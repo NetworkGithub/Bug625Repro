@@ -23,7 +23,7 @@ namespace Bug625Repro.Controllers
             try
             {
                 var Client = GetGraphClient();
-                var inboxMessagesRequest = await Client
+                var inboxMessagesResponse = await Client
                     .Me
                     .MailFolders[mailFolderId]
                     .Messages
@@ -32,10 +32,9 @@ namespace Bug625Repro.Controllers
                         requestConfiguration.QueryParameters.Select = new string[] { "id", "displayName" };
                         requestConfiguration.QueryParameters.Top = int.MaxValue;
                     });
-                var inboxMessages = inboxMessagesRequest.Value;
 
                 var pageIterator = PageIterator<Message, MessageCollectionResponse>
-                    .CreatePageIterator(Client, inboxMessages,
+                    .CreatePageIterator(Client, inboxMessagesResponse!,
                         (message) =>
                         {
                             Thread.Sleep(1);
@@ -43,7 +42,7 @@ namespace Bug625Repro.Controllers
                         });
                 await pageIterator.IterateAsync();
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 //
             }
@@ -53,7 +52,7 @@ namespace Bug625Repro.Controllers
             try
             {
                 var Client = GetGraphClient();
-                var inboxMessagesRequest = await Client
+                var inboxMessagesResponse = await Client
                     .Me
                     .MailFolders[mailFolderId]
                     .Messages
@@ -62,10 +61,9 @@ namespace Bug625Repro.Controllers
                         requestConfiguration.QueryParameters.Select = new string[] { "id", "displayName" };
                         requestConfiguration.QueryParameters.Top = int.MaxValue;
                     });
-                var inboxMessages = inboxMessagesRequest.Value;
 
                 var pageIterator = PageIterator<Message, MessageCollectionResponse>
-                    .CreatePageIterator(Client, inboxMessages,
+                    .CreatePageIterator(Client, inboxMessagesResponse!,
                         async (message) =>
                         {
                             await Task.Delay(1);
@@ -73,7 +71,7 @@ namespace Bug625Repro.Controllers
                         });
                 await pageIterator.IterateAsync();
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 //
             }
